@@ -1,0 +1,40 @@
+#!/usr/bin/env ruby
+
+require 'json'
+
+fasta = File.read(ARGV[0])
+
+def create_element(single)
+  {
+    name: single[:name],
+    sequences: [
+      {
+        proteinChain: {
+          count: 1,
+          sequence: single[:sequence]
+        }
+      }
+    ],
+    modelSeeds: [42],
+    dialect: "alphafoldserver",
+    version: 1
+  }
+end
+
+def entries_from_file(fasta)
+  fasta
+    .split('>')
+    .reject(&:empty?)
+    .map do |entry|
+      lines = entry.split("\n")
+      header = lines.first
+      sequence = lines.drop(1).join('')
+      name = header.split(/\s+/).first
+      { name:, sequence: }
+    end
+end
+
+entries = entries_from_file(fasta)
+  .map(&method(:create_element))
+
+File.write("nlrs.json", JSON.pretty_generate(entries))

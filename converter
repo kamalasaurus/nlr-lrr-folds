@@ -1,0 +1,9 @@
+#!/bin/bash
+
+for f in /Volumes/PhData2/fls2-flg22-interaction-data/inference_output_unique/**/**/*_model.cif; do
+    # Extract the name of the file
+    name=$(basename $f)
+    name=${name%.*}
+    # Convert the file
+    gemmi convert $f /Volumes/PhData2/fls2-flg22-interaction-data/pdbs/$name.pdb
+done
