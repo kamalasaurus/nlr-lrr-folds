@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --job-name=fls2-flg22-inference
+#SBATCH --job-name=nlr-inference
 #SBATCH --nodes=1
 #SBATCH --ntasks-per-node=1
 #SBATCH --cpus-per-task=4
@@ -8,14 +8,14 @@
 #SBATCH --mem=60GB
 #SBATCH --time=10:00:00
 #SBATCH --account=torch_pr_121_general
-#SBATCH --output=/scratch/kr3059/fls2-flg22-analysis/gpu_logs_unique/%A.out
+#SBATCH --output=/scratch/kr3059/nlr-lrr-folds/gpu_logs/%A.out
 
 set -euo pipefail
 
 # Inputs list file; override with SBATCH arg: --export=LIST=/path/to/list.txt
-LIST=${LIST:-/scratch/kr3059/fls2-flg22-analysis/inference_unique_unique.txt}
-OUT_ROOT=${OUT_ROOT:-/scratch/kr3059/fls2-flg22-analysis/inference_output_unique}
-LOG_ROOT=${LOG_ROOT:-/scratch/kr3059/fls2-flg22-analysis/gpu_logs_unique}
+LIST=${LIST:-/scratch/kr3059/nlr-lrr-folds/inference_list.txt}
+OUT_ROOT=${OUT_ROOT:-/scratch/kr3059/nlr-lrr-folds/inference_output}
+LOG_ROOT=${LOG_ROOT:-/scratch/kr3059/nlr-lrr-folds/gpu_logs}
 
 echo "Processing list: $LIST"
 mkdir -p "$OUT_ROOT" "$LOG_ROOT"
